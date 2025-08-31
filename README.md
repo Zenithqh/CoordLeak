@@ -70,6 +70,7 @@ leak:
 ## Note
 
 The permission system is not fully implemented yet. I will update it as soon as I have more time.
+BTW im just a java beginner
 
 ## Contributing
 
