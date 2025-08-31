@@ -1,0 +1,18 @@
+# Legacy format color codes are not supported, use MiniMessage instead
+permission: "<red>You don't have permission to do this!</red>"
+invalidArgument: "<yellow>Invalid argument. Please check your command.</yellow>"
+invalidPlayer: "<yellow>That player is not online or does not exist.</yellow>"
+notEnoughBalance: "<red>You don't have enough balance.</red>"
+buySuccessfully: "<green>You have successfully purchased</green>"
+soPoor: "<red>You have no more uses left for this command. Visit the shop to get more!</red>"
+configReloaded: "Config reloaded"
+
+# Supported placeholder: {player}, {x}, {y}, {dimension}
+randomSelect:
+  message: "<white>ᴀ ʀᴀɴᴅᴏᴍ ᴘʟᴀʏᴇʀ ʜᴀѕ ʙᴇᴇɴ ѕᴇʟᴇᴄᴛᴇᴅ"
+  target: "<white>ᴛᴀʀɢᴇᴛ: <cyan>{player}"
+  coord: "<white>ᴄᴏᴏʀᴅ: <cyan>X={x}, Z={z}"
+  dimension: "<white>ᴅɪᴍᴇɴѕɪᴏɴ: <cyan>{dimension}"
+
+leak:
+  exposed: "<red>Your location has been leaked!"

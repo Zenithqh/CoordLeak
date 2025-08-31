@@ -1,0 +1,18 @@
+name: CoordLeak
+version: '1.0-SNAPSHOT'
+main: com.qhuy.coordLeak.CoordLeak
+api-version: '1.21'
+authors: [ qhuy ]
+description: Allows players to buy usages to leak the coordinates of random online players.
+depend: [Vault]
+softdepend: [Essentials]
+commands:
+  buyusage:
+    usage: /buyusage <amount>
+    description: Buy usages for the /coord command.
+  coord:
+    usage: /coord
+    description: Leak the coordinates of a random online player.
+  creload:
+    usage: /creload
+    description: Reload the plugin's configuration.
