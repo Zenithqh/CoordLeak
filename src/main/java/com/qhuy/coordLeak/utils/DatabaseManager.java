@@ -1,7 +1,11 @@
 package com.qhuy.coordLeak.utils;
 
+import com.qhuy.coordLeak.CoordLeak;
+import org.bukkit.Bukkit;
+
 import java.sql.*;
 import java.util.UUID;
+import java.util.function.Consumer;
 
 public class DatabaseManager {
     private static Connection connection;
@@ -28,37 +32,45 @@ public class DatabaseManager {
         }
     }
 
-    public static int getUsageCount(UUID playerUUID) {
-        String sql = "SELECT usage_count FROM playerUsage WHERE player_uuid = ?";
-        try(PreparedStatement pstmt = connection.prepareStatement(sql)) {
-            pstmt.setString(1, playerUUID.toString());
-            ResultSet rs = pstmt.executeQuery();
-
-            if(rs.next()) {
-                return rs.getInt("usage_count");
+    public static void getUsageCountAsync(UUID playerUUID, CoordLeak plugin, Consumer<Integer> callback) {
+        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
+            int result = 0;
+            String sql = "SELECT usage_count FROM playerUsage WHERE player_uuid = ?";
+            try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+                pstmt.setString(1, playerUUID.toString());
+                ResultSet rs = pstmt.executeQuery();
+                if (rs.next()) {
+                    result = rs.getInt("usage_count");
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return 0;
+
+            int finalResult = result;
+            Bukkit.getScheduler().runTask(plugin, () -> callback.accept(finalResult));
+        });
     }
-    public static void addUsageCount(UUID playerUUID) {
-        String sql = "INSERT INTO playerUsage (player_uuid, usage_count) VALUES (?, 1) " +
-                "ON CONFLICT(player_uuid) DO UPDATE SET usage_count = usage_count + 1;";
-        try(PreparedStatement pstmt = connection.prepareStatement(sql)) {
-            pstmt.setString(1, playerUUID.toString());
-            pstmt.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public static void addUsageCountAsync(UUID playerUUID, CoordLeak plugin) {
+        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
+            String sql = "INSERT INTO playerUsage (player_uuid, usage_count) VALUES (?, 1) " +
+                    "ON CONFLICT(player_uuid) DO UPDATE SET usage_count = usage_count + 1;";
+            try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+                pstmt.setString(1, playerUUID.toString());
+                pstmt.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        });
     }
-    public static void onUsage(UUID playerUUID) {
-        String sql = "UPDATE playerUsage SET usage_count = usage_count - 1 WHERE player_uuid = ? AND usage_count > 0;";
-        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
-            pstmt.setString(1, playerUUID.toString());
-            pstmt.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public static void onUsageAsync(UUID playerUUID, CoordLeak plugin) {
+        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
+            String sql = "UPDATE playerUsage SET usage_count = usage_count - 1 WHERE player_uuid = ? AND usage_count > 0;";
+            try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+                pstmt.setString(1, playerUUID.toString());
+                pstmt.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        });
     }
 }

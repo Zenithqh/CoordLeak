@@ -6,6 +6,7 @@ notEnoughBalance: "<red>You don't have enough balance.</red>"
 buySuccessfully: "<green>You have successfully purchased</green>"
 soPoor: "<red>You have no more uses left for this command. Visit the shop to get more!</red>"
 configReloaded: "Config reloaded"
+noOneIsOnline: "<red>... idk"
 
 # Supported placeholder: {player}, {x}, {y}, {dimension}
 randomSelect:

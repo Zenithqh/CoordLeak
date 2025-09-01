@@ -11,7 +11,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Map;
 import java.util.UUID;
 
 public class buyUsage implements CommandExecutor {
@@ -42,9 +41,9 @@ public class buyUsage implements CommandExecutor {
             target.sendMessage(message.parse(prefix + " " + message.get("notEnoughBalance")));
             return true;
         }
-        DatabaseManager.addUsageCount(targetUUID);
+        DatabaseManager.addUsageCountAsync(targetUUID, plugin);
         CoordLeak.getEconomy().withdrawPlayer(target, price);
-        target.sendMessage(message.get("buySuccessfully"));
+        target.sendMessage(message.parse(prefix + " " + message.get("buySuccessfully")));
 
         return true;
     }

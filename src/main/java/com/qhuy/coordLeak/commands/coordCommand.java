@@ -32,29 +32,32 @@ public class coordCommand implements CommandExecutor {
         List<Player> players = new ArrayList<>(Bukkit.getOnlinePlayers());
         players.remove(sender);
         String prefix = plugin.getConfig().getString("prefix", "");
-        if(!(DatabaseManager.getUsageCount(player.getUniqueId()) > 0)) {
-            player.sendMessage(message.parse(prefix + " " + message.get("soPoor")));
-            return true;
-        }
         if(players.isEmpty()) {
+            player.sendMessage(message.parse(message.get("noOneIsOnline")));
             return true;
         }
-        Player target = players.get(ThreadLocalRandom.current().nextInt(players.size()));
-        DatabaseManager.onUsage(player.getUniqueId());
+        DatabaseManager.getUsageCountAsync(player.getUniqueId(), plugin, (count) -> {
+            if (count > 0) {
+                player.sendMessage(message.parse(prefix + " " + message.get("soPoor")));
+                return;
+            }
 
-        double x = target.getX();
-        double z = target.getZ();
-        String dimension = target.getWorld().getName();
+            Player target = players.get(ThreadLocalRandom.current().nextInt(players.size()));
+            DatabaseManager.onUsageAsync(player.getUniqueId(), plugin);
 
-        player.sendMessage(message.format(prefix + "randomSelect.message", Map.of()));
-        player.sendMessage(message.format("randomSelect.target", Map.of("player", target.getName())));
-        player.sendMessage(message.format("randomSelect.coord", Map.of(
-                "x", String.valueOf(x),
-                "z", String.valueOf(z)
-        )));
-        player.sendMessage(message.format("randomSelect.dimension", Map.of("dimension", dimension)));
-        target.sendMessage(message.parse(message.get("leak.exposed")));
+            double x = target.getX();
+            double z = target.getZ();
+            String dimension = target.getWorld().getName();
 
+            player.sendMessage(message.format(prefix + "randomSelect.message", Map.of()));
+            player.sendMessage(message.format("randomSelect.target", Map.of("player", target.getName())));
+            player.sendMessage(message.format("randomSelect.coord", Map.of(
+                    "x", String.valueOf(x),
+                    "z", String.valueOf(z)
+            )));
+            player.sendMessage(message.format("randomSelect.dimension", Map.of("dimension", dimension)));
+            target.sendMessage(message.parse(message.get("leak.exposed")) );
+        });
 
         return true;
     }
