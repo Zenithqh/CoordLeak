@@ -3,6 +3,7 @@ package com.qhuy.coordLeak;
 import com.qhuy.coordLeak.commands.buyUsage;
 import com.qhuy.coordLeak.commands.coordCommand;
 import com.qhuy.coordLeak.commands.reload;
+import com.qhuy.coordLeak.commands.setUsage;
 import net.milkbowl.vault.economy.Economy;
 import com.qhuy.coordLeak.utils.DatabaseManager;
 import com.qhuy.coordLeak.utils.message;
@@ -61,6 +62,7 @@ public final class CoordLeak extends JavaPlugin {
         Bukkit.getPluginCommand("buyusage").setExecutor(new buyUsage(this));
         Bukkit.getPluginCommand("coord").setExecutor(new coordCommand(this));
         Bukkit.getPluginCommand("creload").setExecutor(new reload(this));
+        Bukkit.getPluginCommand("setusage").setExecutor(new setUsage(this));
     }
 
     @Override
