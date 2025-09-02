@@ -27,7 +27,7 @@ jobs:
     - name: Upload compiled JAR
       uses: actions/upload-artifact@v4
       with:
-        name: jars
+        name: NighlyBuild
         path: target/*.jar
         if-no-files-found: error
         compression-level: 0
