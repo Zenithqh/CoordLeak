@@ -27,5 +27,8 @@ jobs:
     - name: Upload compiled JAR
       uses: actions/upload-artifact@v4
       with:
-        name: plugin-jar
+        name: jars
         path: target/*.jar
+        if-no-files-found: error
+        compression-level: 0
+        overwrite: true
