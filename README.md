@@ -21,13 +21,18 @@ Leaks the coordinates of a random online player.
 
 ### `/buyusage`
 Gives a player one usage of the `/coord` command, charging them the configured price.
-*   **Usage:** `/buyusage <player>`
-*   **Permission:** `coordleak.admin`
+*   **Usage:** `/buyusage`
+*   **Permission:** `coordleak.use` (Default for all players)
+
+### `/setusage`
+Set total usage, idk
+*   **Usage:** `/addusage <player> <amount>`
+*   **Permission:** `coordleak.admin` (Default: OP)
 
 ### `/creload`
 Reloads the plugin's configuration files (`config.yml` and `messages.yml`).
 *   **Usage:** `/creload`
-*   **Permission:** `coordleak.admin`
+*   **Permission:** `coordleak.admin` (Default: OP)
 
 ## Configuration
 
@@ -51,6 +56,7 @@ buySuccessfully: "<green>You have successfully purchased</green>"
 soPoor: "<red>You have no more uses left for this command. Visit the shop to get more!</red>"
 configReloaded: "Config reloaded"
 noOneIsOnline: "<red>No players are currently online.</red>"
+setSuccess: "<green>Set usage count successfully</green>"
 
 # Supported placeholder: {player}, {x}, {y}, {dimension}
 randomSelect:

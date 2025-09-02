@@ -22,28 +22,23 @@ public class buyUsage implements CommandExecutor {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String s, String[] args) {
         String prefix = plugin.getConfig().getString("prefix", "");
         double price = plugin.getConfig().getDouble("price", 500);
-        if(!(sender.hasPermission("coordleak.admin")) || sender instanceof BlockCommandSender) {
-            sender.sendMessage(message.parse(message.get("permission")));
+        if(!(sender instanceof Player player)) {
+            sender.sendMessage("shut the fuck up, only player can use this command");
             return true;
         }
-        if(args.length != 1) {
-            sender.sendMessage(message.parse(prefix + " " + message.get("invalidArgument")));
+        if(args.length != 0) {
+            player.sendMessage(message.parse(prefix + " " + message.get("invalidArgument")));
             return true;
         }
-        Player target = Bukkit.getPlayerExact(args[0]);
-        if(target == null) {
-            sender.sendMessage(message.parse(prefix + " " + message.get("invalidPlayer")));
-            return true;
-        }
-        UUID targetUUID = target.getUniqueId();
-        double balance = CoordLeak.getEconomy().getBalance(target);
+        UUID targetUUID = player.getUniqueId();
+        double balance = CoordLeak.getEconomy().getBalance(player);
         if(balance < price) {
-            target.sendMessage(message.parse(prefix + " " + message.get("notEnoughBalance")));
+            player.sendMessage(message.parse(prefix + " " + message.get("soPoor")));
             return true;
         }
+        CoordLeak.getEconomy().withdrawPlayer(player, price);
         DatabaseManager.addUsageCountAsync(targetUUID, plugin);
-        CoordLeak.getEconomy().withdrawPlayer(target, price);
-        target.sendMessage(message.parse(prefix + " " + message.get("buySuccessfully")));
+        player.sendMessage(message.parse(prefix + " " + message.get("buySuccessfully")));
 
         return true;
     }

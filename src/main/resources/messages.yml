@@ -7,6 +7,7 @@ buySuccessfully: "<green>You have successfully purchased</green>"
 soPoor: "<red>You have no more uses left for this command. Visit the shop to get more!</red>"
 configReloaded: "Config reloaded"
 noOneIsOnline: "<red>No players are currently online.</red>"
+setSuccess: "<green>Set usage count successfully</green>"
 
 # Supported placeholder: {player}, {x}, {y}, {dimension}
 randomSelect:

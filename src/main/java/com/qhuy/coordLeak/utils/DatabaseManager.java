@@ -6,6 +6,7 @@ import org.bukkit.Bukkit;
 import java.sql.*;
 import java.util.UUID;
 import java.util.function.Consumer;
+import java.util.logging.Level;
 
 public class DatabaseManager {
     private static Connection connection;
@@ -22,13 +23,13 @@ public class DatabaseManager {
             stmt.execute(createTable);
         }
     }
-    public void disconnect() {
+    public void disconnect(CoordLeak plugin) {
         try {
             if (connection != null && !connection.isClosed()) {
                 connection.close();
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            plugin.getLogger().log(Level.SEVERE, "Error while disconnecting from the database.", e);
         }
     }
 
@@ -43,7 +44,7 @@ public class DatabaseManager {
                     result = rs.getInt("usage_count");
                 }
             } catch (SQLException e) {
-                e.printStackTrace();
+                plugin.getLogger().log(Level.SEVERE, "Failed to get usage count for player " + playerUUID, e);
             }
 
             int finalResult = result;
@@ -58,7 +59,21 @@ public class DatabaseManager {
                 pstmt.setString(1, playerUUID.toString());
                 pstmt.executeUpdate();
             } catch (SQLException e) {
-                e.printStackTrace();
+                plugin.getLogger().log(Level.SEVERE, "Failed to add usage count for player " + playerUUID, e);
+            }
+        });
+    }
+    public static void setUsageCountAsync(UUID playerUUID, CoordLeak plugin, int count) {
+        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
+            String sql = "INSERT INTO playerUsage (player_uuid, usage_count) VALUES (?, ?) " +
+                    "ON CONFLICT(player_uuid) DO UPDATE SET usage_count = ?;";
+            try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+                pstmt.setString(1, playerUUID.toString());
+                pstmt.setInt(2, count);
+                pstmt.setInt(3, count);
+                pstmt.executeUpdate();
+            } catch (SQLException e) {
+                plugin.getLogger().log(Level.SEVERE, "Failed to set usage count for player " + playerUUID, e);
             }
         });
     }
@@ -69,7 +84,7 @@ public class DatabaseManager {
                 pstmt.setString(1, playerUUID.toString());
                 pstmt.executeUpdate();
             } catch (SQLException e) {
-                e.printStackTrace();
+                plugin.getLogger().log(Level.SEVERE, "Failed to update usage count for player " + playerUUID, e);
             }
         });
     }

@@ -25,15 +25,17 @@ public class coordCommand implements CommandExecutor {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String s, String[] args) {
         String prefix = plugin.getConfig().getString("prefix", "");
         if(!(sender instanceof Player player)) {
+            sender.sendMessage("shut the fuck up, only player can use this command");
             return true;
         }
         if(args.length != 0) {
+            sender.sendMessage(message.parse(prefix + " " + message.get("invalidArgument")));
             return true;
         }
         List<Player> players = new ArrayList<>(Bukkit.getOnlinePlayers());
         players.remove(sender);
         if(players.isEmpty()) {
-            player.sendMessage(message.parse(message.get("noOneIsOnline")));
+            player.sendMessage(message.parse(prefix + " " + message.get("noOneIsOnline")));
             return true;
         }
         DatabaseManager.getUsageCountAsync(player.getUniqueId(), plugin, (count) -> {
@@ -56,7 +58,7 @@ public class coordCommand implements CommandExecutor {
                     "z", String.valueOf(z)
             )));
             player.sendMessage(message.format("randomSelect.dimension", Map.of("dimension", dimension)));
-            target.sendMessage(message.parse(message.get("leak.exposed")) );
+            target.sendMessage(message.parse(message.get("leak.exposed")));
         });
 
         return true;

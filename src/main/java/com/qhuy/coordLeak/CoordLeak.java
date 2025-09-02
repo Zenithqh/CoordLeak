@@ -15,6 +15,7 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
+import java.sql.SQLException;
 
 public final class CoordLeak extends JavaPlugin {
     private static CoordLeak instance;
@@ -46,13 +47,17 @@ public final class CoordLeak extends JavaPlugin {
             Bukkit.getPluginManager().disablePlugin(this);
         }
         databaseManager = new DatabaseManager();
-        try {
-            databaseManager.connect();
-            getLogger().info("Database connected");
-        } catch (Exception e) {
-            getLogger().warning("Error while connecting to the database, disabling plugin...");
-            Bukkit.getPluginManager().disablePlugin(this);
-        }
+        Bukkit.getScheduler().runTaskAsynchronously(this, () -> {
+            try {
+                databaseManager.connect();
+                getLogger().info("Database connected");
+            } catch (SQLException e) {
+                getLogger().warning("(\"Error while connecting to the database, disabling plugin...\");");
+                Bukkit.getScheduler().runTask(this, () -> {
+                    Bukkit.getPluginManager().disablePlugin(this);
+                });
+            }
+        });
         Bukkit.getPluginCommand("buyusage").setExecutor(new buyUsage(this));
         Bukkit.getPluginCommand("coord").setExecutor(new coordCommand(this));
         Bukkit.getPluginCommand("creload").setExecutor(new reload(this));
@@ -62,7 +67,10 @@ public final class CoordLeak extends JavaPlugin {
     public void onDisable() {
         info("Disabling");
         if(databaseManager != null) {
-            databaseManager.disconnect();
+            Bukkit.getScheduler().runTaskAsynchronously(this, () -> {
+                databaseManager.disconnect(this);
+                getLogger().info("Database disconnected");
+            });
         }
         if(this.adventure != null) {
             this.adventure.close();
