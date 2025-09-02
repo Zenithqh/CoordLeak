@@ -16,18 +16,18 @@ This is a small hobby project, created for fun.
 ### `/coord`
 Leaks the coordinates of a random online player.
 *   **Usage:** `/coord`
-*   **Permission:** `Not now` (Default for all players)
+*   **Permission:** `coordleak.use` (Default for all players)
 *   **Note:** This command requires the player to have at least one usage.
 
 ### `/buyusage`
 Gives a player one usage of the `/coord` command, charging them the configured price.
 *   **Usage:** `/buyusage <player>`
-*   **Permission:** `Not now` (OP only)
+*   **Permission:** `coordleak.admin`
 
 ### `/creload`
 Reloads the plugin's configuration files (`config.yml` and `messages.yml`).
 *   **Usage:** `/creload`
-*   **Permission:** `Not now` (OP only)
+*   **Permission:** `coordleak.admin`
 
 ## Configuration
 

@@ -22,8 +22,8 @@ public class buyUsage implements CommandExecutor {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String s, String[] args) {
         String prefix = plugin.getConfig().getString("prefix", "");
         double price = plugin.getConfig().getDouble("price", 500);
-        if(!(sender.isOp()) || sender instanceof BlockCommandSender) {
-            sender.sendMessage(message.parse(prefix + " " + message.get("permission")));
+        if(!(sender.hasPermission("coordleak.admin")) || sender instanceof BlockCommandSender) {
+            sender.sendMessage(message.parse(message.get("permission")));
             return true;
         }
         if(args.length != 1) {

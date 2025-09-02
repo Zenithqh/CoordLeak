@@ -8,6 +8,7 @@ import com.qhuy.coordLeak.utils.DatabaseManager;
 import com.qhuy.coordLeak.utils.message;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.RegisteredServiceProvider;
@@ -82,9 +83,14 @@ public final class CoordLeak extends JavaPlugin {
         text.append("&8|   &9Name: &bCoordLeak\n");
         text.append("&8|   &9Author: ").append(getDescription().getAuthors()).append("\n");
         text.append("&8|\n");
+        text.append("&8| &9Contact:\n");
+        text.append("&8|   &9Email: &bzenythqh@gmail.com\n");
+        text.append("&8|   &9Discord: &b@qhuy120420\n");
+        text.append("&8|   &9Modrinth: &bZenythqh\n");
+        text.append("&8|\n");
         text.append("&8[]=========================================[]\n");
 
-        Bukkit.getConsoleSender().sendMessage(message.chat(text.toString()));
+        Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', text.toString()));
     }
 
     private boolean setupEconomy() {

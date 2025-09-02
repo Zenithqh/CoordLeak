@@ -14,7 +14,7 @@ public class reload implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, String label, String[] args) {
-        if(!sender.isOp()) {
+        if(!(sender.hasPermission("coordleak.admin"))) {
             sender.sendMessage(message.get("permission"));
             return true;
         }

@@ -23,6 +23,7 @@ public class coordCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String s, String[] args) {
+        String prefix = plugin.getConfig().getString("prefix", "");
         if(!(sender instanceof Player player)) {
             return true;
         }
@@ -31,7 +32,6 @@ public class coordCommand implements CommandExecutor {
         }
         List<Player> players = new ArrayList<>(Bukkit.getOnlinePlayers());
         players.remove(sender);
-        String prefix = plugin.getConfig().getString("prefix", "");
         if(players.isEmpty()) {
             player.sendMessage(message.parse(message.get("noOneIsOnline")));
             return true;

@@ -6,6 +6,11 @@ authors: [ qhuy ]
 description: Allows players to buy usages to leak the coordinates of random online players.
 depend: [Vault]
 softdepend: [Essentials]
+permissions:
+  coordleak.admin:
+    default: op
+  coordleak.use:
+    default: true
 commands:
   buyusage:
     usage: /buyusage <amount>
