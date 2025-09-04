@@ -6,7 +6,6 @@ import com.qhuy.coordLeak.commands.reload;
 import com.qhuy.coordLeak.commands.setUsage;
 import net.milkbowl.vault.economy.Economy;
 import com.qhuy.coordLeak.utils.DatabaseManager;
-import com.qhuy.coordLeak.utils.message;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -21,7 +20,7 @@ import java.sql.SQLException;
 public final class CoordLeak extends JavaPlugin {
     private static CoordLeak instance;
     private BukkitAudiences adventure;
-    private static Economy econ;
+    private Economy econ;
     private DatabaseManager databaseManager;
     private FileConfiguration messages;
     private File file;
@@ -59,10 +58,10 @@ public final class CoordLeak extends JavaPlugin {
                 });
             }
         });
-        Bukkit.getPluginCommand("buyusage").setExecutor(new buyUsage(this));
-        Bukkit.getPluginCommand("coord").setExecutor(new coordCommand(this));
+        Bukkit.getPluginCommand("buyusage").setExecutor(new buyUsage(this, databaseManager));
+        Bukkit.getPluginCommand("coord").setExecutor(new coordCommand(this, databaseManager));
         Bukkit.getPluginCommand("creload").setExecutor(new reload(this));
-        Bukkit.getPluginCommand("setusage").setExecutor(new setUsage(this));
+        Bukkit.getPluginCommand("setusage").setExecutor(new setUsage(this, databaseManager));
     }
 
     @Override
@@ -114,7 +113,7 @@ public final class CoordLeak extends JavaPlugin {
         econ = rsp.getProvider();
         return true;
     }
-    public static Economy getEconomy() {
+    public Economy getEconomy() {
         return econ;
     }
     public void reload() {

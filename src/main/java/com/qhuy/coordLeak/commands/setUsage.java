@@ -11,9 +11,13 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 public class setUsage implements CommandExecutor {
-    private CoordLeak plugin;
+    private final CoordLeak plugin;
+    private final DatabaseManager databaseManager;
 
-    public setUsage(CoordLeak plugin) { this.plugin = plugin; }
+    public setUsage(CoordLeak plugin, DatabaseManager databaseManager) { 
+        this.plugin = plugin; 
+        this.databaseManager = databaseManager;
+    }
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String s, String[] args) {
@@ -38,11 +42,8 @@ public class setUsage implements CommandExecutor {
             sender.sendMessage(message.parse(prefix + " " + message.get("invalidPlayer")));
             return true;
         }
-        DatabaseManager.setUsageCountAsync(target.getUniqueId(), plugin, count);
+        databaseManager.setUsageCountAsync(target.getUniqueId(), plugin, count);
         sender.sendMessage(message.parse(prefix + " " + message.get("setSuccess")));
-
-
-
 
         return true;
     }

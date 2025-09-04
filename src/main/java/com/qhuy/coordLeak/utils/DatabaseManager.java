@@ -9,7 +9,7 @@ import java.util.function.Consumer;
 import java.util.logging.Level;
 
 public class DatabaseManager {
-    private static Connection connection;
+    private Connection connection;
 
     public void connect() throws SQLException {
         String url = "jdbc:sqlite:plugins/CoordLeak/data.db";
@@ -33,7 +33,7 @@ public class DatabaseManager {
         }
     }
 
-    public static void getUsageCountAsync(UUID playerUUID, CoordLeak plugin, Consumer<Integer> callback) {
+    public void getUsageCountAsync(UUID playerUUID, CoordLeak plugin, Consumer<Integer> callback) {
         Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
             int result = 0;
             String sql = "SELECT usage_count FROM playerUsage WHERE player_uuid = ?";
@@ -51,7 +51,7 @@ public class DatabaseManager {
             Bukkit.getScheduler().runTask(plugin, () -> callback.accept(finalResult));
         });
     }
-    public static void addUsageCountAsync(UUID playerUUID, CoordLeak plugin) {
+    public void addUsageCountAsync(UUID playerUUID, CoordLeak plugin) {
         Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
             String sql = "INSERT INTO playerUsage (player_uuid, usage_count) VALUES (?, 1) " +
                     "ON CONFLICT(player_uuid) DO UPDATE SET usage_count = usage_count + 1;";
@@ -63,7 +63,7 @@ public class DatabaseManager {
             }
         });
     }
-    public static void setUsageCountAsync(UUID playerUUID, CoordLeak plugin, int count) {
+    public void setUsageCountAsync(UUID playerUUID, CoordLeak plugin, int count) {
         Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
             String sql = "INSERT INTO playerUsage (player_uuid, usage_count) VALUES (?, ?) " +
                     "ON CONFLICT(player_uuid) DO UPDATE SET usage_count = ?;";
@@ -77,7 +77,7 @@ public class DatabaseManager {
             }
         });
     }
-    public static void onUsageAsync(UUID playerUUID, CoordLeak plugin) {
+    public void onUsageAsync(UUID playerUUID, CoordLeak plugin) {
         Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
             String sql = "UPDATE playerUsage SET usage_count = usage_count - 1 WHERE player_uuid = ? AND usage_count > 0;";
             try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
