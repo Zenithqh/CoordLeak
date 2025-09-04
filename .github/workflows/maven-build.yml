@@ -27,7 +27,7 @@ jobs:
     - name: Upload compiled JAR
       uses: actions/upload-artifact@v4
       with:
-        name: NighlyBuild
+        name: NightlyBuild
         path: target/*.jar
         if-no-files-found: error
         compression-level: 0
