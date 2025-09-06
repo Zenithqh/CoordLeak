@@ -128,13 +128,11 @@
             <groupId>net.kyori</groupId>
             <artifactId>adventure-api</artifactId>
             <version>${adventure.version}</version>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>net.kyori</groupId>
             <artifactId>adventure-text-minimessage</artifactId>
             <version>${adventure.version}</version>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>net.kyori</groupId>
