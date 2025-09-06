@@ -11,11 +11,11 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
 
-public class buyUsage implements CommandExecutor {
+public class buyusageCommand implements CommandExecutor {
     private final CoordLeak plugin;
     private final DatabaseManager databaseManager;
 
-    public buyUsage(CoordLeak plugin, DatabaseManager databaseManager) { 
+    public buyusageCommand(CoordLeak plugin, DatabaseManager databaseManager) {
         this.plugin = plugin; 
         this.databaseManager = databaseManager;
     }

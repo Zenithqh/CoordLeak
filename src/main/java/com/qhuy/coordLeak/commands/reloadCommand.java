@@ -7,10 +7,10 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 
-public class reload implements CommandExecutor {
+public class reloadCommand implements CommandExecutor {
     private CoordLeak plugin;
 
-    public reload(CoordLeak plugin) { this.plugin = plugin; }
+    public reloadCommand(CoordLeak plugin) { this.plugin = plugin; }
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, String label, String[] args) {

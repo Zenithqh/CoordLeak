@@ -1,9 +1,9 @@
 package com.qhuy.coordLeak;
 
-import com.qhuy.coordLeak.commands.buyUsage;
+import com.qhuy.coordLeak.commands.buyusageCommand;
 import com.qhuy.coordLeak.commands.coordCommand;
-import com.qhuy.coordLeak.commands.reload;
-import com.qhuy.coordLeak.commands.setUsage;
+import com.qhuy.coordLeak.commands.reloadCommand;
+import com.qhuy.coordLeak.commands.setusageCommand;
 import net.milkbowl.vault.economy.Economy;
 import com.qhuy.coordLeak.utils.DatabaseManager;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
@@ -58,10 +58,10 @@ public final class CoordLeak extends JavaPlugin {
                 });
             }
         });
-        Bukkit.getPluginCommand("buyusage").setExecutor(new buyUsage(this, databaseManager));
+        Bukkit.getPluginCommand("buyusage").setExecutor(new buyusageCommand(this, databaseManager));
         Bukkit.getPluginCommand("coord").setExecutor(new coordCommand(this, databaseManager));
-        Bukkit.getPluginCommand("creload").setExecutor(new reload(this));
-        Bukkit.getPluginCommand("setusage").setExecutor(new setUsage(this, databaseManager));
+        Bukkit.getPluginCommand("creload").setExecutor(new reloadCommand(this));
+        Bukkit.getPluginCommand("setusage").setExecutor(new setusageCommand(this, databaseManager));
     }
 
     @Override

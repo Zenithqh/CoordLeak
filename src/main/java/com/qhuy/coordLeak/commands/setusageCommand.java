@@ -10,11 +10,11 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-public class setUsage implements CommandExecutor {
+public class setusageCommand implements CommandExecutor {
     private final CoordLeak plugin;
     private final DatabaseManager databaseManager;
 
-    public setUsage(CoordLeak plugin, DatabaseManager databaseManager) { 
+    public setusageCommand(CoordLeak plugin, DatabaseManager databaseManager) {
         this.plugin = plugin; 
         this.databaseManager = databaseManager;
     }
